@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
-import Section1Opening from './components/Section1Opening'
-import Section2SystemComparison from './components/Section2SystemComparison'
-import Section3Introduction from './components/Section3Introduction'
-import Section4Details from './components/Section4Details'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import HomePage from './pages/HomePage'
 import './App.css'
 
 function App() {
@@ -23,12 +21,13 @@ function App() {
   }, [])
 
   return (
-    <div className="app">
-      <Section1Opening />
-      <Section2SystemComparison />
-      <Section3Introduction />
-      <Section4Details />
-    </div>
+    <BrowserRouter>
+      <div className="app">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   )
 }
 

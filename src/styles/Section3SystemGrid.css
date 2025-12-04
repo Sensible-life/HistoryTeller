@@ -1,0 +1,85 @@
+.section-3 {
+  min-height: 100vh;
+  background: transparent;
+  padding: 2rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-3-content {
+  width: 100%;
+  max-width: 1400px;
+}
+
+.section-3-question {
+  text-align: center;
+  font-family: GyeongbokgungSumunjangTitleB, serif;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--text-dark);
+}
+
+.systems-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.system-card {
+  background: transparent;
+  border: 2px solid var(--text-light);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: auto;
+}
+
+.system-title {
+  font-family: GyeongbokgungSumunjangTitleB, serif;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--text-dark);
+}
+
+.system-visualization {
+  width: 100%;
+  height: 120px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 각 제도의 시각화 영역 */
+}
+
+.system-description {
+  font-family: GyeongbokgungSumunjangBodyText, serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-light);
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .systems-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .systems-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-3-question {
+    font-size: 2rem;
+  }
+  
+  .system-card {
+    min-height: auto;
+  }
+}
+

@@ -1,7 +1,10 @@
 .section-2 {
-  background: #f8f8f8;
+  background: transparent;
   padding: 0;
   min-height: 400vh;
+  padding-top: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .sticky-container {
@@ -11,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  background: transparent;
 }
 
 .systems-canvas {
@@ -22,48 +25,53 @@
 .scroll-content {
   position: relative;
   z-index: 2;
+  /* 각 step이 스크롤 트리거 역할을 하도록 충분한 높이 확보 */
+  min-height: 1300vh;
 }
 
 .step {
   min-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 4rem;
-  max-width: 600px;
-  margin-left: 5%;
+  position: relative; /* scrollama가 감지할 수 있도록 relative 유지 */
+  padding: 0; /* 패딩 제거 */
+  margin: 0; /* 마진 제거 */
+  background: none; /* 배경 제거 */
+  /* 실제 콘텐츠는 fixed로 화면 중앙에 고정 */
 }
 
-.step h2 {
-  font-family: var(--font-main);
+.step-content {
+  position: fixed;
+  top: 5%; /* 원 위쪽에 텍스트 배치 */
+  left: 5%;
+  max-width: 800px;
+  padding: 0;
+  margin: 0;
+  background: none !important; /* 배경 완전 제거 */
+  border: none !important; /* 테두리 완전 제거 */
+  box-shadow: none !important; /* 그림자 완전 제거 */
+  opacity: 0; /* 초기값은 0, 스크롤에 따라 조절됨 */
+  transition: opacity 0.5s ease-out;
+  pointer-events: none;
+}
+
+.step-content h2 {
+  font-family: GyeongbokgungSumunjangTitleB, serif; /* Section1Opening과 동일한 폰트 */
   font-size: 2.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   color: var(--text-dark);
 }
 
-.step p {
+.step-content p {
+  font-family: GyeongbokgungSumunjangBodyText, serif; /* Section1Opening과 동일한 폰트 */
+  font-weight: 500;
   font-size: 1.2rem;
   color: var(--text-light);
-  margin-bottom: 1.5rem;
+  line-height: 1.6;
 }
 
-.system-description {
-  background: white;
-  padding: 1.5rem;
-  border-left: 4px solid var(--accent-blue);
-  margin-top: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.system-description p {
-  color: var(--text-dark);
-  font-size: 1rem;
-}
 
 @media (max-width: 768px) {
   .step {
-    padding: 2rem;
+    padding: 0;
     max-width: 100%;
   }
 
