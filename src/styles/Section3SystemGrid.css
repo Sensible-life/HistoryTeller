@@ -29,7 +29,7 @@
 
 .system-card {
   background: transparent;
-  border: 2px solid var(--text-light);
+  border: none;
   border-radius: 8px;
   padding: 1.5rem;
   display: flex;
@@ -52,7 +52,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   /* 각 제도의 시각화 영역 */
+}
+
+.system-visualization-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .system-description {

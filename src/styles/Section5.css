@@ -1,0 +1,185 @@
+.section-5 {
+  min-height: auto;
+  background: transparent;
+  padding: 4rem 2rem;
+  position: relative;
+}
+
+.section-5-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.text-block-full-width {
+  width: 100%;
+  max-width: 1200px;
+  margin: 10rem auto 0;
+  padding: 0;
+}
+
+.section-5 .text-block {
+  text-align: center;
+  padding: 0 2rem 4rem 2rem;
+}
+
+.section-5 .text-block p {
+  font-family: GyeongbokgungSumunjangBodyText, serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.section-5 .text-block p:last-child {
+  margin-bottom: 0;
+}
+
+.section-5 .text-spacer {
+  margin-top: 3rem;
+}
+
+.section-5 .text-block p.big-text {
+  font-family: 'Joseon100Years', serif;
+  font-size: 6rem;
+  font-weight: 400;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  color: var(--accent-color);
+  line-height: 1;
+}
+
+/* 장벽 섹션 */
+.barrier-section {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-top: 8rem;
+  padding: 8rem 0 0 0;
+  background: linear-gradient(to bottom,
+    rgba(115, 115, 115, 0) 0%,
+    rgba(115, 115, 115, 0.4) 100%
+  );
+}
+
+.barrier-list {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.barrier-item {
+  font-family: GyeongbokgungSumunjangBodyText, serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.8;
+  margin-bottom: 4rem;
+  padding: 2rem 0;
+  max-width: 70%;
+}
+
+.barrier-item.left {
+  text-align: left;
+  margin-right: auto;
+}
+
+.barrier-item.right {
+  text-align: right;
+  margin-left: auto;
+}
+
+/* 그라데이션에 따른 글씨 색상 */
+.barrier-item.item-light {
+  color: var(--text-dark);
+}
+
+.barrier-item.item-medium {
+  color: #555;
+}
+
+.barrier-item.item-dark {
+  color: var(--text-light);
+}
+
+/* 결론 텍스트 */
+.barrier-conclusion {
+  text-align: center;
+  max-width: 900px;
+  margin: 8rem auto 0;
+  padding: 0 2rem;
+}
+
+.barrier-conclusion p {
+  font-family: GyeongbokgungSumunjangBodyText, serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.8;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+.barrier-conclusion p:last-child {
+  margin-bottom: 0;
+}
+
+/* 반대 그라데이션 - 점점 밝아짐 */
+.barrier-fade-out {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-top: 0;
+  padding-top: 0;
+  height: 80vh;
+  background: linear-gradient(to bottom,
+    rgba(115, 115, 115, 0.4) 0%,
+    rgba(115, 115, 115, 0) 100%
+  );
+}
+
+/* 가문 분석 설명 */
+.family-analysis-intro {
+  text-align: center;
+  max-width: 900px;
+  margin: -20vh auto 0;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.family-analysis-intro p {
+  font-family: GyeongbokgungSumunjangBodyText, serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.family-analysis-intro p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .section-5 .text-block {
+    padding: 1.5rem;
+  }
+
+  .section-5 .text-block p {
+    font-size: 1rem;
+  }
+
+  .barrier-item {
+    font-size: 1.1rem;
+    max-width: 90%;
+    margin-bottom: 3rem;
+  }
+}

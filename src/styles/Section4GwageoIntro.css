@@ -1,0 +1,151 @@
+.section-4 {
+  min-height: auto;
+  background: transparent;
+  padding: 4rem 2rem;
+  position: relative;
+}
+
+.section-4-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.text-block {
+  max-width: 1200px;
+  padding: 4rem 2rem;
+  margin: 0 auto;
+}
+
+.text-block-1,
+.text-block-2 {
+  text-align: center;
+}
+
+.text-block-3 {
+  text-align: left;
+  max-width: 100%;
+  margin-left: 0;
+  margin-top: 8rem;
+  margin-bottom: 12rem;
+  padding: 0 1rem 4rem 1rem;
+  position: relative;
+  z-index: 10;
+  background: transparent;
+}
+
+.text-blocks-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-top: 0;
+  padding-top: 8rem;
+  position: relative;
+  min-height: 460vh;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+  z-index: 1;
+}
+
+.text-blocks-container {
+  width: 50%;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.text-block-4-wrapper {
+  position: relative;
+  margin-bottom: 0;
+  margin-top: 10rem;
+}
+
+.text-block-4-container {
+  position: relative;
+}
+
+.text-block-4 {
+  text-align: left;
+  padding: 0 2rem 4rem 2rem;
+}
+
+.text-block-5-wrapper {
+  position: relative;
+  margin-top: 8rem;
+  padding-top: 0;
+}
+
+.text-block-5-container {
+  position: relative;
+}
+
+.text-block-5 {
+  text-align: left;
+  padding: 0 2rem 4rem 2rem;
+}
+
+.circles-grid-container {
+  width: 50%;
+  flex-shrink: 0;
+  position: sticky;
+  top: 50vh;
+  transform: translateY(-50%);
+  height: 800px;
+  align-self: flex-start;
+  box-sizing: border-box;
+  z-index: 1;
+  margin-top: 35vh;
+}
+
+.circles-grid-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.text-block p {
+  font-family: GyeongbokgungSumunjangBodyText, serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.text-block p:last-child {
+  margin-bottom: 0;
+}
+
+.text-block-3 .text-spacer {
+  margin-top: 3rem;
+}
+
+.text-block-4 .text-spacer {
+    margin-top: 3rem;
+  }
+
+.text-block-5 .text-spacer {
+  margin-top: 3rem;
+}
+
+.text-block-6 .text-spacer {
+  margin-top: 3rem;
+}
+
+@media (max-width: 768px) {
+  .text-block {
+    padding: 1.5rem;
+  }
+
+  .text-block p {
+    font-size: 1rem;
+  }
+
+  .text-block-3 {
+    left: 5%;
+    max-width: 90%;
+  }
+}
+
