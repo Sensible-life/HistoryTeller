@@ -10,20 +10,18 @@ function Section5() {
             <p>법적으로는 양인이라면 누구나 응시할 수 있었기 때문에 과거에는 매우 많은 인원이 몰렸습니다.</p>
             <p>그중에서도 문과는 조선에서 고위 관료로 진출할 수 있는 거의 유일한 통로였기 때문에 지원자가 집중되었고,</p>
             <p>자연스럽게 문과의 경쟁률은 극단적으로 높아졌습니다.</p>
-            <p className="big-text">6000:1</p>
-            <p className="text-spacer">그러나 실제로 누구나 응시할 수 있었던 것은 아닙니다.</p>
           </div>
         </div>
 
         {/* 장벽 목록 - 점점 어두워지는 배경 */}
         <div className="barrier-section">
           <div className="barrier-list">
-            <p className="barrier-item left item-light">응시하려면 4대 조상의 신원을 모두 적어 제출해야 했고,</p>
-            <p className="barrier-item right item-light">6품 이상 관원의 보증을 받아야 했고,</p>
-            <p className="barrier-item left item-medium">조상 중 관직자가 없으면 관원 3명의 추천까지 받아야 했고,</p>
-            <p className="barrier-item right item-medium">경우에 따라 예비 경전 시험을 미리 통과해야 했으며,</p>
-            <p className="barrier-item left item-dark">시험에 쓸 정해진 규격의 종이를 준비해야 했고,</p>
-            <p className="barrier-item right item-dark">시험장을 자유롭게 선택하지 못했고,</p>
+            <p className="barrier-item left item-light">4대 조상의 신원을 모두 적어 제출할 수 있고,</p>
+            <p className="barrier-item right item-light">6품 이상 관원의 보증을 받았고,</p>
+            <p className="barrier-item left item-medium">조상 중 관직자가 없으면 관원 3명의 추천까지 받고,</p>
+            <p className="barrier-item right item-medium">경우에 따라 예비 경전 시험을 미리 통과했으며,</p>
+            <p className="barrier-item left item-dark">시험에 쓸 정해진 규격의 종이를 준비했고,</p>
+            <p className="barrier-item right item-dark">배정받은 시험장에 충분히 갈 수 있는</p>
             <p className="barrier-item left item-dark">절차를 조금만 어겨도 응시가 취소되거나 처벌을 받았기에,</p>
           </div>
 

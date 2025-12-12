@@ -93,19 +93,19 @@ function createParetoPath(data, width, height, padding) {
   const points = data.map((item, index) => {
     cumulative += item.count
     const cumulativePercent = (cumulative / TOTAL_GWAGEO) * 100
-    
+
     const x = padding.left + index * barWidth + barWidth / 2
     const y = padding.top + chartHeight - (cumulativePercent / 100) * chartHeight
-    
+
     return { x, y }
   })
 
   // Path 문자열 생성 (폐곡선)
   let pathString = `M ${padding.left} ${padding.top + chartHeight} `
-  
+
   // 첫 점으로 이동
   pathString += `L ${points[0].x} ${points[0].y} `
-  
+
   // 부드러운 곡선으로 연결 (Quadratic Bezier Curve)
   for (let i = 1; i < points.length; i++) {
     const prevPoint = points[i - 1]
@@ -113,13 +113,23 @@ function createParetoPath(data, width, height, padding) {
     const controlX = (prevPoint.x + currentPoint.x) / 2
     pathString += `Q ${controlX} ${prevPoint.y}, ${currentPoint.x} ${currentPoint.y} `
   }
-  
+
   // 마지막 점에서 아래로 내려와 폐곡선 완성
   const lastPoint = points[points.length - 1]
   pathString += `L ${lastPoint.x} ${padding.top + chartHeight} `
   pathString += `Z`
-  
+
   return pathString
+}
+
+// 직사각형 path 생성 함수
+function createRectanglePath(centerX, centerY, width, height) {
+  const left = centerX - width / 2
+  const right = centerX + width / 2
+  const top = centerY - height / 2
+  const bottom = centerY + height / 2
+
+  return `M ${left} ${top} L ${right} ${top} L ${right} ${bottom} L ${left} ${bottom} Z`
 }
 
 // 상위 15개 본관 데이터 (지리적 좌표 포함)
@@ -140,6 +150,19 @@ const chartData = [
   { name: '반남박씨', fullName: '박 반남(潘南)', count: 201, geoX: 0.28, geoY: 0.72 },
   { name: '동래정씨', fullName: '정 동래(東萊)', count: 199, geoX: 0.80, geoY: 0.68 },
   { name: '청송심씨', fullName: '심 청송(靑松)', count: 198, geoX: 0.68, geoY: 0.42 }
+]
+
+// 지역별 비율 데이터 (글씨와 함께 나타날 원들)
+// 한양(0.35, 0.6) 기준으로 재배치
+const regionData = [
+  { name: '한양', value: 9.8, geoX: 0.35, geoY: 0.6 },
+  { name: '평양', value: 2.2, geoX: 0.2, geoY: 0.5 },
+  { name: '경상', value: 1.0, geoX: 0.75, geoY: 0.85 },
+  { name: '충청', value: 1.0, geoX: 0.55, geoY: 0.65 },
+  { name: '함경', value: 1.0, geoX: 0.65, geoY: 0.30 },
+  { name: '강원', value: 1.0, geoX: 0.55, geoY: 0.52 },
+  { name: '전라', value: 1.0, geoX: 0.45, geoY: 0.9 },
+  { name: '황해', value: 1.0, geoX: 0.30, geoY: 0.48 },
 ]
 
 function ParetoChart() {
@@ -234,30 +257,70 @@ function ParetoChart() {
   const optimizedKoreaPoints = useMemo(() => {
     return optimizePointOrder(paretoPoints, koreaPoints)
   }, [paretoPoints, koreaPoints])
-  
+
+  // 직사각형 포인트 생성 (가로로 긴 직사각형, 화면 중앙정렬)
+  const rectanglePoints = useMemo(() => {
+    // SVG viewBox 중앙에 위치
+    const rectWidth = svgWidth * 0.95  // 화면 가로의 70%
+    const rectHeight = svgHeight * 0.5  // 화면 세로의 20%
+    const rectCenterX = svgWidth / 2  // 가로 중앙
+    // 세로 위치 - 화면 하단 쪽에 배치
+    const rectCenterY = svgHeight * 0.8 - chartOffset
+
+    const rectPath = createRectanglePath(rectCenterX, rectCenterY, rectWidth, rectHeight)
+    return samplePathPoints(rectPath, numPoints)
+  }, [svgWidth, svgHeight, chartOffset])
+
+  // 최적화된 직사각형 포인트 (koreaPoints와 최단 거리로 매칭)
+  const optimizedRectanglePoints = useMemo(() => {
+    return optimizePointOrder(optimizedKoreaPoints, rectanglePoints)
+  }, [optimizedKoreaPoints, rectanglePoints])
+
   // 스크롤 기반 progress 계산 - 차트가 화면에 들어온 후 시작
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"] // 차트가 화면 하단에 닿을 때 시작, 화면 상단을 벗어날 때 끝
   })
 
-  // 레이블 opacity
-  const labelsOpacity = useTransform(scrollYProgress, [0, 0.3, 0.6], [1, 1, 0])
+  // 레이블 및 원 opacity - 동일한 타이밍으로 사라짐
+  const labelsOpacity = useTransform(scrollYProgress, [0, 0.3, 0.5], [1, 1, 0])
+  const circlesOpacity = useTransform(scrollYProgress, [0, 0.3, 0.5], [1, 1, 0])
 
-  // Point-by-point morphing (30~50% 구간에서 매우 빠르게 진행)
+  // 3단계 Point-by-point morphing
   const morphedPath = useTransform(scrollYProgress, (progress) => {
-    // 0~0.3: 파레토 유지, 0.3~0.5: morphing (매우 빠르게), 0.5~: 완료 상태 유지
-    const morphProgress = progress < 0.3 ? 0 :
-                         progress > 0.5 ? 1 :
-                         (progress - 0.3) / 0.2
+    let interpolatedPoints
 
-    const interpolatedPoints = paretoPoints.map((paretoPoint, i) => {
-      const koreaPoint = optimizedKoreaPoints[i]
-      return {
-        x: paretoPoint.x + (koreaPoint.x - paretoPoint.x) * morphProgress,
-        y: paretoPoint.y + (koreaPoint.y - paretoPoint.y) * morphProgress
-      }
-    })
+    if (progress < 0.3) {
+      // 0~0.3: 파레토 유지
+      interpolatedPoints = paretoPoints
+    } else if (progress < 0.5) {
+      // 0.3~0.5: 파레토 → 한반도
+      const morphProgress = (progress - 0.3) / 0.2
+      interpolatedPoints = paretoPoints.map((paretoPoint, i) => {
+        const koreaPoint = optimizedKoreaPoints[i]
+        return {
+          x: paretoPoint.x + (koreaPoint.x - paretoPoint.x) * morphProgress,
+          y: paretoPoint.y + (koreaPoint.y - paretoPoint.y) * morphProgress
+        }
+      })
+    } else if (progress < 0.75) {
+      // 0.5~0.75: 한반도 유지
+      interpolatedPoints = optimizedKoreaPoints
+    } else if (progress < 0.85) {
+      // 0.75~0.85: 한반도 → 직사각형 (빠르게 morphing)
+      const morphProgress = Math.min((progress - 0.75) / 0.1, 1)  // 1을 초과하지 않도록 제한
+      interpolatedPoints = optimizedKoreaPoints.map((koreaPoint, i) => {
+        const rectPoint = optimizedRectanglePoints[i]
+        return {
+          x: koreaPoint.x + (rectPoint.x - koreaPoint.x) * morphProgress,
+          y: koreaPoint.y + (rectPoint.y - koreaPoint.y) * morphProgress
+        }
+      })
+    } else {
+      // 0.85~: 직사각형 유지 (완전히 고정)
+      interpolatedPoints = optimizedRectanglePoints
+    }
+
     return pointsToPath(interpolatedPoints)
   })
 
@@ -286,11 +349,6 @@ function ParetoChart() {
             const circlesPerColumn = Math.ceil(circlesNeeded / numColumns)
             const baseY = padding.top + chartHeight - chartOffset
 
-            // 한반도 내 목표 위치 계산
-            const { actualWidth, actualHeight, scale, targetX, targetY } = koreaTransform
-            const geoTargetX = targetX + data.geoX * actualWidth * scale
-            const geoTargetY = targetY + data.geoY * actualHeight * scale
-
             for (let col = 0; col < numColumns; col++) {
               const startIdx = col * circlesPerColumn
               const endIdx = Math.min(startIdx + circlesPerColumn, circlesNeeded)
@@ -300,34 +358,14 @@ function ParetoChart() {
                 const startCx = x + (barWidth - numColumns * circleRadius * 2) / 2 + col * circleRadius * 2 + circleRadius
                 const startCy = baseY - (row * circleRadius * 2) - circleRadius
 
-                // 약간의 랜덤 오프셋으로 히트맵 효과
-                const randomOffsetX = (Math.random() - 0.5) * 30
-                const randomOffsetY = (Math.random() - 0.5) * 30
-                const endCx = geoTargetX + randomOffsetX
-                const endCy = geoTargetY + randomOffsetY
-
-                // cx, cy 애니메이션
-                const animatedCx = useTransform(scrollYProgress, (progress) => {
-                  const morphProgress = progress < 0.3 ? 0 :
-                                       progress > 0.5 ? 1 :
-                                       (progress - 0.3) / 0.2
-                  return startCx + (endCx - startCx) * morphProgress
-                })
-
-                const animatedCy = useTransform(scrollYProgress, (progress) => {
-                  const morphProgress = progress < 0.3 ? 0 :
-                                       progress > 0.5 ? 1 :
-                                       (progress - 0.3) / 0.2
-                  return startCy + (endCy - startCy) * morphProgress
-                })
-
                 circles.push(
                   <motion.circle
                     key={`${familyIndex}-${circleIndex}`}
-                    cx={animatedCx}
-                    cy={animatedCy}
+                    cx={startCx}
+                    cy={startCy}
                     r={circleRadius}
                     fill="#000"
+                    style={{ opacity: circlesOpacity }}
                   />
                 )
               }
@@ -344,6 +382,61 @@ function ParetoChart() {
             fill="rgba(115, 115, 115, 0.2)"
             stroke="none"
           />
+        </g>
+
+        {/* 지역별 원들 - 글씨와 함께 순차적으로 나타남 */}
+        <g>
+          {regionData.map((region, index) => {
+            const { actualWidth, actualHeight, scale, targetX, targetY } = koreaTransform
+            const cx = targetX + region.geoX * actualWidth * scale
+            const cy = targetY + region.geoY * actualHeight * scale - chartOffset
+
+            // 크기는 value에 비례 (최대 4.9를 기준으로)
+            const maxValue = 4.9
+            const baseSize = 60 // 이미지 크기
+            const size = (region.value / maxValue) * baseSize
+
+            // 랜덤 Union 이미지 선택 (0-49)
+            const randomUnionIndex = Math.floor(Math.random() * 50)
+            const imageUrl = `/assets/Union-${randomUnionIndex}.png`
+
+            // fade in & fade out
+            // 0.55~0.65: fade in, 0.65~0.75: 유지, 0.75~0.85: fade out
+            const fadeInStart = 0.55 + Math.min(index, 3) * 0.036
+            const fadeInEnd = fadeInStart + 0.1
+            const fadeOutStart = 0.85
+            const fadeOutEnd = 0.95
+            const regionOpacity = useTransform(
+              scrollYProgress,
+              [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd],
+              [0, 1, 1, 0]
+            )
+
+            return (
+              <g key={index}>
+                <motion.image
+                  href={imageUrl}
+                  x={cx - size / 2}
+                  y={cy - size / 2}
+                  width={size}
+                  height={size}
+                  style={{ opacity: regionOpacity }}
+                />
+                <motion.text
+                  x={cx}
+                  y={cy + size / 2 + 15}
+                  textAnchor="middle"
+                  fontFamily="GyeongbokgungSumunjangBodyText, serif"
+                  fontSize={(2.2 / maxValue) * baseSize * 0.35}
+                  fontWeight="700"
+                  fill="var(--text-dark)"
+                  style={{ opacity: regionOpacity }}
+                >
+                  {region.name}
+                </motion.text>
+              </g>
+            )
+          })}
         </g>
 
         {/* 레이블 - 차트와 겹치게 네거티브 마진 */}
@@ -448,6 +541,16 @@ function ParetoChart() {
           <p>행정적 접근성, 교육 자원 등에서 불리함이 누적되었고,</p>
           <p>결국 응시자의 규모 자체가 작아져</p>
           <p>합격 비율에도 그대로 반영되었습니다.</p>
+        </div>
+
+        {/* morphing과 함께 나타나는 중앙정렬 텍스트 */}
+        <div className="pareto-text-block-center">
+          <p>이러한 격차는 조선시대 전반에 걸쳐 반복되었습니다.</p>
+          <p>여러 왕들이 지역 편중을 완화하기 위한 제도적 보완책을 내놓았지만,</p>
+          <p>그 효과는 시대마다 다르게 나타났습니다.</p>
+          <p className="text-spacer">시간이 흐를수록 지역 간 격차는 완전히 해소되지 않았지만,</p>
+          <p>제도 변화와 사회 구조의 변동에 따라 조금씩 다른 패턴이 나타납니다.</p>
+          <p>노란 점을 눌러 각각의 시기마다 왜 이런 변화가 일어났는지 직접 탐색해보세요.</p>
         </div>
       </div>
     </div>

@@ -30,8 +30,8 @@
 }
 
 .pareto-text-block {
-  margin-bottom: 12rem;
-  text-align: center;
+  margin-bottom: 2rem;
+  text-align: left;
 }
 
 .pareto-text-block p {
@@ -49,6 +49,26 @@
 
 .pareto-text-block .text-spacer {
   margin-top: 3rem;
+}
+
+/* 중앙정렬 텍스트 블록 */
+.pareto-text-block-center {
+  text-align: center;
+  margin-top: 150vh;
+  margin-bottom: 2rem;
+}
+
+.pareto-text-block-center p {
+  font-family: GyeongbokgungSumunjangBodyText, serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.pareto-text-block-center p:last-child {
+  margin-bottom: 0;
 }
 
 /* canvas는 더 이상 사용하지 않지만 호환성 유지 */
