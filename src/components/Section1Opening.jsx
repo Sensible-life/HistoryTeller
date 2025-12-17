@@ -9,34 +9,59 @@ function Section1Opening() {
   const transitionRef = useRef(null)
 
   useEffect(() => {
-    // Generate 60 talents with random Union images
+    // Generate 50 talents with random Union images
     const generateTalents = () => {
       const talentTypes = [
-        {
-          type: '지능형',
-          description: '뛰어난 학습 능력과 분석력을 가진 인재',
-          traits: ['논리적 사고', '빠른 학습', '문제 해결']
-        },
-        {
-          type: '성취형',
-          description: '목표 달성에 집중하는 실행력 있는 인재',
-          traits: ['추진력', '결과 지향', '목표 의식']
-        },
-        {
-          type: '책임형',
-          description: '공동체를 위한 희생과 헌신을 아끼지 않는 인재',
-          traits: ['책임감', '희생정신', '협동심']
-        },
-        {
-          type: '애국형',
-          description: '나라와 민족을 최우선으로 생각하는 인재',
-          traits: ['애국심', '충성심', '봉사정신']
-        },
-        {
-          type: '윤리형',
-          description: '도덕적 가치와 원칙을 중시하는 인재',
-          traits: ['정직성', '도덕성', '원칙주의']
-        }
+        { type: '지능형', description: '뛰어난 학습 능력과 분석력을 가진 인재' },
+        { type: '성취형', description: '목표 달성에 집중하는 실행력 있는 인재' },
+        { type: '책임형', description: '공동체를 위한 희생과 헌신을 아끼지 않는 인재' },
+        { type: '애국형', description: '나라와 민족을 최우선으로 생각하는 인재' },
+        { type: '윤리형', description: '도덕적 가치와 원칙을 중시하는 인재' },
+        { type: '창의형', description: '새로운 아이디어와 혁신을 추구하는 인재' },
+        { type: '협력형', description: '팀워크와 소통을 중시하는 인재' },
+        { type: '리더형', description: '조직을 이끄는 통솔력을 지닌 인재' },
+        { type: '전문형', description: '특정 분야의 깊은 전문성을 가진 인재' },
+        { type: '실용형', description: '현실적이고 실천적인 해결책을 제시하는 인재' },
+        { type: '탐구형', description: '끊임없이 질문하고 탐색하는 인재' },
+        { type: '봉사형', description: '타인을 돕는 것에 보람을 느끼는 인재' },
+        { type: '도전형', description: '새로운 시도를 두려워하지 않는 인재' },
+        { type: '안정형', description: '신중하고 체계적인 접근을 선호하는 인재' },
+        { type: '감성형', description: '공감 능력과 정서 지능이 높은 인재' },
+        { type: '논리형', description: '체계적 사고와 합리적 판단을 중시하는 인재' },
+        { type: '추진형', description: '빠른 실행력으로 일을 완수하는 인재' },
+        { type: '전략형', description: '장기적 계획과 전략 수립에 능한 인재' },
+        { type: '혁신형', description: '기존 틀을 깨고 변화를 주도하는 인재' },
+        { type: '조화형', description: '균형과 조화를 추구하는 인재' },
+        { type: '독립형', description: '자율적이고 주도적으로 일하는 인재' },
+        { type: '소통형', description: '효과적인 의사소통으로 관계를 이어가는 인재' },
+        { type: '통찰형', description: '본질을 꿰뚫어보는 직관력을 가진 인재' },
+        { type: '인내형', description: '어려움 속에서도 끝까지 버티는 인재' },
+        { type: '유연형', description: '변화에 빠르게 적응하는 인재' },
+        { type: '성실형', description: '맡은 바 책임을 다하는 인재' },
+        { type: '겸손형', description: '자신을 낮추고 타인을 존중하는 인재' },
+        { type: '진취형', description: '적극적으로 앞으로 나아가는 인재' },
+        { type: '신중형', description: '신중하게 생각하고 행동하는 인재' },
+        { type: '열정형', description: '일에 대한 열정과 에너지가 넘치는 인재' },
+        { type: '분석형', description: '데이터와 사실에 기반한 판단을 하는 인재' },
+        { type: '공정형', description: '공평과 정의를 중요시하는 인재' },
+        { type: '절제형', description: '자기 관리와 절제를 실천하는 인재' },
+        { type: '용기형', description: '어려운 결정 앞에서 용기를 내는 인재' },
+        { type: '신뢰형', description: '신뢰와 믿음을 바탕으로 행동하는 인재' },
+        { type: '배려형', description: '타인을 먼저 생각하는 마음을 가진 인재' },
+        { type: '관찰형', description: '세밀한 관찰력으로 상황을 파악하는 인재' },
+        { type: '목표형', description: '명확한 목표 설정과 달성에 집중하는 인재' },
+        { type: '실천형', description: '생각을 행동으로 옮기는 인재' },
+        { type: '긍정형', description: '긍정적 태도로 주변에 활력을 주는 인재' },
+        { type: '신념형', description: '확고한 신념을 가지고 행동하는 인재' },
+        { type: '겸양형', description: '겸손하고 온화한 태도를 지닌 인재' },
+        { type: '융합형', description: '다양한 영역을 연결하고 통합하는 인재' },
+        { type: '헌신형', description: '자신을 바쳐 일에 몰두하는 인재' },
+        { type: '지혜형', description: '경험에서 지혜를 얻어 적용하는 인재' },
+        { type: '정직형', description: '정직과 투명성을 실천하는 인재' },
+        { type: '도덕형', description: '높은 도덕성을 바탕으로 행동하는 인재' },
+        { type: '충성형', description: '조직과 동료에 대한 충성심이 강한 인재' },
+        { type: '의리형', description: '의리와 신의를 중시하는 인재' },
+        { type: '명예형', description: '명예와 자긍심을 소중히 여기는 인재' }
       ]
 
       const talents = []
@@ -44,8 +69,6 @@ function Section1Opening() {
       const centerX = 0
       const centerY = 0
 
-      const innerGap = 0.1
-      const outerGap = 0.3
       const count = [-2, -1, 0, 1, 2]
 
       for (let i = 0; i < 10; i++) {
@@ -54,17 +77,17 @@ function Section1Opening() {
           const x = centerX + radius * Math.cos(angle)
           const y = centerY + radius * Math.sin(angle)
           const randomUnion = Math.floor(Math.random() * 49) + 1
-          const randomType = talentTypes[Math.floor(Math.random() * talentTypes.length)]
+          const talentIndex = i * 5 + j // 0-49
           const randomDelay = Math.random() * 3
 
           talents.push({
-            id: i * 5 + j, // 고유 ID (0-49)
+            id: talentIndex,
             x,
             y,
             image: `/assets/Union-${randomUnion}.png`,
             angle,
             delay: randomDelay,
-            ...randomType
+            ...talentTypes[talentIndex]
           })
         }
       }
@@ -218,16 +241,13 @@ function Section1Opening() {
                 className="talent-tooltip"
                 style={{
                   left: `calc(50% + ${hoveredTalent.x}px)`,
-                  top: `calc(50% + ${hoveredTalent.y - 80}px)`
+                  top: hoveredTalent.y < 0 
+                    ? `calc(50% + ${hoveredTalent.y + 80}px)` 
+                    : `calc(50% + ${hoveredTalent.y - 80}px)`
                 }}
               >
                 <h4>{hoveredTalent.type}</h4>
                 <p>{hoveredTalent.description}</p>
-                <div className="traits">
-                  {hoveredTalent.traits.map((trait, i) => (
-                    <span key={i} className="trait-tag">{trait}</span>
-                  ))}
-                </div>
               </div>
             )}
           </div>

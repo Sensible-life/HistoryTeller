@@ -96,7 +96,10 @@ function Section7() {
     <div className="section-7-container" ref={containerRef}>
       <motion.div 
         className="intro-text-block"
-        style={{ opacity: introTextOpacity }}
+        style={{ 
+          opacity: introTextOpacity,
+          pointerEvents: introTextOpacity.get() > 0 ? 'auto' : 'none'
+        }}
       >
         <p>다양한 정책을 도입해도 사회 구조적 문제는 쉽게 바뀌지 않았습니다.</p>
         <p>조선왕조실록의 기록을 보면 이 편중은 시대를 거쳐 꾸준히 지적되었고,</p>
@@ -105,7 +108,10 @@ function Section7() {
       
       <motion.div 
         className="section-7-wrapper"
-        style={{ opacity: bookOpacity }}
+        style={{ 
+          opacity: bookOpacity,
+          pointerEvents: bookOpacity.get() > 0 ? 'auto' : 'none'
+        }}
       >
         <div className="section-7-content">
         <div className="book-wrapper">
@@ -156,7 +162,10 @@ function Section7() {
       {/* 첫 번째 마무리 텍스트 */}
       <motion.div 
         className="closing-text-block closing-text-1"
-        style={{ opacity: closingText1Opacity }}
+        style={{ 
+          opacity: closingText1Opacity,
+          pointerEvents: closingText1Opacity.get() > 0 ? 'auto' : 'none'
+        }}
       >
         <p>이러한 기록을 보면, 지역 간 접근성과 교육 자원의 격차가</p>
         <p>시대와 제도가 달라져도 쉽게 해소되지 않는다는 사실을 깨닫게 됩니다.</p>
@@ -167,7 +176,10 @@ function Section7() {
       {/* 두 번째 마무리 텍스트 */}
       <motion.div 
         className="closing-text-block closing-text-2"
-        style={{ opacity: closingText2Opacity }}
+        style={{ 
+          opacity: closingText2Opacity,
+          pointerEvents: closingText2Opacity.get() > 0 ? 'auto' : 'none'
+        }}
       >
         <p>오래전 실록에 남겨진 불균형의 흔적은 오늘에도 여러 모습으로 이어지고 있습니다.</p>
         <p>그렇다면 앞으로의 시대를 살아가는 우리는, 어떤 모습을 기록하게 될까요?</p>
