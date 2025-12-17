@@ -122,15 +122,6 @@ function createParetoPath(data, width, height, padding) {
   return pathString
 }
 
-// 직사각형 path 생성 함수
-function createRectanglePath(centerX, centerY, width, height) {
-  const left = centerX - width / 2
-  const right = centerX + width / 2
-  const top = centerY - height / 2
-  const bottom = centerY + height / 2
-
-  return `M ${left} ${top} L ${right} ${top} L ${right} ${bottom} L ${left} ${bottom} Z`
-}
 
 // 상위 15개 본관 데이터 (지리적 좌표 포함)
 // 좌표는 한반도 SVG 내의 상대적 위치 (0-1 범위의 정규화된 값)
@@ -217,9 +208,9 @@ function ParetoChart() {
     const scaledWidth = actualWidth * scale
     const scaledHeight = actualHeight * scale
 
-    // 오른쪽으로 더 이동, 위로 올림 (viewport 내에서)
+    // 오른쪽으로 더 이동, 살짝 아래로 (viewport 내에서)
     const targetX = padding.left + chartWidth * 0.65
-    const targetY = padding.top + (chartHeight - scaledHeight) / 2
+    const targetY = padding.top + (chartHeight - scaledHeight) / 2 + 50
 
     return { actualX, actualY, actualWidth, actualHeight, scale, targetX, targetY }
   }, [svgWidth, svgHeight])
@@ -258,23 +249,6 @@ function ParetoChart() {
     return optimizePointOrder(paretoPoints, koreaPoints)
   }, [paretoPoints, koreaPoints])
 
-  // 직사각형 포인트 생성 (가로로 긴 직사각형, 화면 중앙정렬)
-  const rectanglePoints = useMemo(() => {
-    // SVG viewBox 중앙에 위치
-    const rectWidth = svgWidth * 0.95  // 화면 가로의 70%
-    const rectHeight = svgHeight * 0.5  // 화면 세로의 20%
-    const rectCenterX = svgWidth / 2  // 가로 중앙
-    // 세로 위치 - 화면 하단 쪽에 배치
-    const rectCenterY = svgHeight * 0.8 - chartOffset
-
-    const rectPath = createRectanglePath(rectCenterX, rectCenterY, rectWidth, rectHeight)
-    return samplePathPoints(rectPath, numPoints)
-  }, [svgWidth, svgHeight, chartOffset])
-
-  // 최적화된 직사각형 포인트 (koreaPoints와 최단 거리로 매칭)
-  const optimizedRectanglePoints = useMemo(() => {
-    return optimizePointOrder(optimizedKoreaPoints, rectanglePoints)
-  }, [optimizedKoreaPoints, rectanglePoints])
 
   // 스크롤 기반 progress 계산 - 차트가 화면에 들어온 후 시작
   const { scrollYProgress } = useScroll({
@@ -282,20 +256,20 @@ function ParetoChart() {
     offset: ["start end", "end start"] // 차트가 화면 하단에 닿을 때 시작, 화면 상단을 벗어날 때 끝
   })
 
-  // 레이블 및 원 opacity - 동일한 타이밍으로 사라짐
-  const labelsOpacity = useTransform(scrollYProgress, [0, 0.3, 0.5], [1, 1, 0])
-  const circlesOpacity = useTransform(scrollYProgress, [0, 0.3, 0.5], [1, 1, 0])
+  // 레이블 및 원 opacity - 타이밍 조정
+  const labelsOpacity = useTransform(scrollYProgress, [0, 0.32, 0.45], [1, 1, 0])
+  const circlesOpacity = useTransform(scrollYProgress, [0, 0.32, 0.45], [1, 1, 0])
 
-  // 3단계 Point-by-point morphing
+  // 2단계 Point-by-point morphing - 파레토 → 한반도
   const morphedPath = useTransform(scrollYProgress, (progress) => {
     let interpolatedPoints
 
-    if (progress < 0.3) {
-      // 0~0.3: 파레토 유지
+    if (progress < 0.32) {
+      // 0~0.32: 파레토 유지
       interpolatedPoints = paretoPoints
-    } else if (progress < 0.5) {
-      // 0.3~0.5: 파레토 → 한반도
-      const morphProgress = (progress - 0.3) / 0.2
+    } else if (progress < 0.45) {
+      // 0.32~0.45: 파레토 → 한반도
+      const morphProgress = (progress - 0.32) / (0.45 - 0.32)
       interpolatedPoints = paretoPoints.map((paretoPoint, i) => {
         const koreaPoint = optimizedKoreaPoints[i]
         return {
@@ -303,26 +277,16 @@ function ParetoChart() {
           y: paretoPoint.y + (koreaPoint.y - paretoPoint.y) * morphProgress
         }
       })
-    } else if (progress < 0.75) {
-      // 0.5~0.75: 한반도 유지
-      interpolatedPoints = optimizedKoreaPoints
-    } else if (progress < 0.85) {
-      // 0.75~0.85: 한반도 → 직사각형 (빠르게 morphing)
-      const morphProgress = Math.min((progress - 0.75) / 0.1, 1)  // 1을 초과하지 않도록 제한
-      interpolatedPoints = optimizedKoreaPoints.map((koreaPoint, i) => {
-        const rectPoint = optimizedRectanglePoints[i]
-        return {
-          x: koreaPoint.x + (rectPoint.x - koreaPoint.x) * morphProgress,
-          y: koreaPoint.y + (rectPoint.y - koreaPoint.y) * morphProgress
-        }
-      })
     } else {
-      // 0.85~: 직사각형 유지 (완전히 고정)
-      interpolatedPoints = optimizedRectanglePoints
+      // 0.45~: 한반도 유지
+      interpolatedPoints = optimizedKoreaPoints
     }
 
     return pointsToPath(interpolatedPoints)
   })
+
+  // 중앙 텍스트 opacity (한반도 morphing 완료 후 fade in)
+  const centerTextOpacity = useTransform(scrollYProgress, [0.45, 0.55], [0, 1])
 
   return (
     <div className="pareto-chart-container" ref={containerRef}>
@@ -400,12 +364,12 @@ function ParetoChart() {
             const randomUnionIndex = Math.floor(Math.random() * 50)
             const imageUrl = `/assets/Union-${randomUnionIndex}.png`
 
-            // fade in & fade out
-            // 0.55~0.65: fade in, 0.65~0.75: 유지, 0.75~0.85: fade out
-            const fadeInStart = 0.55 + Math.min(index, 3) * 0.036
-            const fadeInEnd = fadeInStart + 0.1
-            const fadeOutStart = 0.85
-            const fadeOutEnd = 0.95
+            // fade in & fade out - 타이밍 조정
+            // 0.37~0.45: fade in (순차적), 0.45~0.55: 유지, 0.47~0.55: fade out (한번에)
+            const fadeInStart = 0.5 + Math.min(index, 3) * 0.03
+            const fadeInEnd = fadeInStart + 0.05
+            const fadeOutStart = 1  // 모든 원이 동일한 시점에 시작
+            const fadeOutEnd = 1.2  // 짧은 구간에 한번에 fade out
             const regionOpacity = useTransform(
               scrollYProgress,
               [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd],
@@ -541,16 +505,6 @@ function ParetoChart() {
           <p>행정적 접근성, 교육 자원 등에서 불리함이 누적되었고,</p>
           <p>결국 응시자의 규모 자체가 작아져</p>
           <p>합격 비율에도 그대로 반영되었습니다.</p>
-        </div>
-
-        {/* morphing과 함께 나타나는 중앙정렬 텍스트 */}
-        <div className="pareto-text-block-center">
-          <p>이러한 격차는 조선시대 전반에 걸쳐 반복되었습니다.</p>
-          <p>여러 왕들이 지역 편중을 완화하기 위한 제도적 보완책을 내놓았지만,</p>
-          <p>그 효과는 시대마다 다르게 나타났습니다.</p>
-          <p className="text-spacer">시간이 흐를수록 지역 간 격차는 완전히 해소되지 않았지만,</p>
-          <p>제도 변화와 사회 구조의 변동에 따라 조금씩 다른 패턴이 나타납니다.</p>
-          <p>노란 점을 눌러 각각의 시기마다 왜 이런 변화가 일어났는지 직접 탐색해보세요.</p>
         </div>
       </div>
     </div>

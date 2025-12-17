@@ -1,0 +1,292 @@
+.section-7-container {
+  width: 100%;
+  position: relative;
+  min-height: 1400vh;
+}
+
+.section-7-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, var(--bg-primary) 0%, #1a1a2e 100%);
+  z-index: 10;
+  padding: 4rem 2rem;
+}
+
+.section-7-content {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-7-title {
+  font-family: GyeongbokgungSumunjangTitleB, serif;
+  font-weight: 700;
+  font-size: 3rem;
+  color: var(--text-dark);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.intro-text-block {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  max-width: 1000px;
+  width: 90%;
+  z-index: 200;
+}
+
+.intro-text-block p {
+  font-family: GyeongbokgungSumunjangBodyText, serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.book-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  perspective: 1500px;
+  position: relative;
+}
+
+.book-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.flip-book {
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+}
+
+.page {
+  background: transparent;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 페이지 텍스트 오버레이 */
+.page-text-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  pointer-events: none;
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+}
+
+.overlay-text-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding: 2rem;
+}
+
+.overlay-content {
+  font-family: GyeongbokgungSumunjangTitleB, serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 2;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+  white-space: pre-line;
+}
+
+.overlay-source {
+  font-family: GyeongbokgungSumunjangBodyM, serif;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #666;
+}
+
+.page-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* 표지 */
+.cover-page {
+  background: linear-gradient(135deg, #c0392b 0%, #8e44ad 100%);
+  color: white;
+}
+
+.cover-title {
+  font-family: GyeongbokgungSumunjangTitleB, serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  line-height: 1.4;
+}
+
+.cover-subtitle {
+  font-family: GyeongbokgungSumunjangBodyText, serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* 내용 페이지 */
+.content-page {
+  background: 
+    linear-gradient(145deg, rgba(255, 255, 255, 0.3) 0%, rgba(0, 0, 0, 0.02) 100%),
+    linear-gradient(90deg, #f9f6f0 0%, #ede8dc 50%, #f9f6f0 100%);
+  background-size: 100% 100%, 3px 100%;
+  position: relative;
+}
+
+.content-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(0deg, transparent, transparent 1.5rem, rgba(150, 130, 100, 0.1) 1.5rem, rgba(150, 130, 100, 0.1) calc(1.5rem + 1px));
+  pointer-events: none;
+  border-radius: 5px;
+}
+
+.page-title {
+  font-family: GyeongbokgungSumunjangTitleB, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+}
+
+.page-text {
+  font-family: GyeongbokgungSumunjangBodyText, serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 2;
+  color: #34495e;
+  max-width: 90%;
+}
+
+.page-number {
+  position: absolute;
+  bottom: 1rem;
+  right: 1.5rem;
+  font-family: GyeongbokgungSumunjangBodyText, serif;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+/* 뒷표지 */
+.back-cover-page {
+  background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+  color: white;
+}
+
+.back-cover-text {
+  font-family: GyeongbokgungSumunjangTitleB, serif;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .section-7-wrapper {
+    padding: 2rem 1rem;
+  }
+
+  .section-7-title {
+    font-size: 2rem;
+  }
+
+  .cover-title {
+    font-size: 2rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .page-text {
+    font-size: 1rem;
+  }
+
+  .overlay-content {
+    font-size: 1.2rem;
+  }
+
+  .overlay-source {
+    font-size: 0.9rem;
+  }
+
+  .closing-text-block p {
+    font-size: 1.1rem;
+  }
+}
+
+/* 마무리 텍스트 블록 */
+.closing-text-block {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  max-width: 1200px;
+  width: 90%;
+  z-index: 300;
+}
+
+.closing-text-block p {
+  font-family: GyeongbokgungSumunjangBodyText, serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.closing-text-2 p {
+  font-family: GyeongbokgungSumunjangTitleB, serif;
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 2;
+}

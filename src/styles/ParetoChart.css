@@ -3,10 +3,11 @@
   max-width: 1200px;
   margin: -4rem auto 0;
   padding: 0 2rem;
+  padding-bottom: 100vh;
   position: relative;
   z-index: 1;
-  /* morphing을 보기 위한 충분한 스크롤 공간 */
-  min-height: 500vh;
+  /* 한반도 morphing과 텍스트 표시를 위한 스크롤 공간 */
+  min-height: 330vh;
 }
 
 .pareto-chart-svg {
@@ -14,19 +15,23 @@
   height: auto;
   display: block;
   position: sticky;
-  top: -45vh;
+  top: -50vh;
   margin-top: -40rem;
   aspect-ratio: 1 / 1;
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* Morphing 완료 후 나타나는 텍스트 */
 .pareto-text-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0;
   padding: 0 2rem 0 4rem;
-  /* Morphing이 완료될 때까지 충분한 공간 확보 */
-  padding-top: 250vh;
+  /* 한반도 morphing 완료 후 텍스트 시작 */
+  padding-top: 150vh;
+  position: relative;
+  z-index: 1;
 }
 
 .pareto-text-block {
@@ -54,7 +59,7 @@
 /* 중앙정렬 텍스트 블록 */
 .pareto-text-block-center {
   text-align: center;
-  margin-top: 150vh;
+  margin-top: 4rem;
   margin-bottom: 2rem;
 }
 
@@ -69,6 +74,10 @@
 
 .pareto-text-block-center p:last-child {
   margin-bottom: 0;
+}
+
+.pareto-text-block-center .text-spacer {
+  margin-top: 2rem;
 }
 
 /* canvas는 더 이상 사용하지 않지만 호환성 유지 */

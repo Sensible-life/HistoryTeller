@@ -1,0 +1,12 @@
+.section-6 {
+  width: 100%;
+  /* 배경색 없음 - 이전 섹션 배경 유지 */
+  position: relative;
+}
+
+.section-6-content {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0;
+}
