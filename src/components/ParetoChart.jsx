@@ -360,8 +360,8 @@ function ParetoChart() {
             const baseSize = 60 // 이미지 크기
             const size = (region.value / maxValue) * baseSize
 
-            // 랜덤 Union 이미지 선택 (0-49)
-            const randomUnionIndex = Math.floor(Math.random() * 50)
+            // 랜덤 Union 이미지 선택 (1-49)
+            const randomUnionIndex = Math.floor(Math.random() * 49) + 1
             const imageUrl = `/assets/Union-${randomUnionIndex}.png`
 
             // fade in & fade out - 타이밍 조정

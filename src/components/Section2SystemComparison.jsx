@@ -341,13 +341,13 @@ function Section2SystemComparison() {
       const electionEnd = -windowHeight * 3.8      // 선거 완료 시점 (후보자 fade-out 완료)
       
       // 선거 텍스트 fade-out (선거 완료 후 스크롤 간격을 두고)
-      const electionTextFadeOutStart = -windowHeight * 4.2  // 선거 텍스트 fade-out 시작
-      const electionTextFadeOutEnd = -windowHeight * 4.5  // 선거 텍스트 fade-out 완료
-      
-      // 세습 단계: 선거 텍스트 fade-out과 동시에 시작
-      const hereditaryStart = -windowHeight * 4.2  // 세습 시작 (선거 텍스트 fade-out과 동시)
-      const hereditaryTextFadeInStart = -windowHeight * 4.2  // 세습 텍스트 fade-in 시작
-      const hereditaryTextFadeInEnd = -windowHeight * 4.5  // 세습 텍스트 fade-in 완료
+      const electionTextFadeOutStart = -windowHeight * 3.8  // 선거 텍스트 fade-out 시작 (애니메이션 완료 직후)
+      const electionTextFadeOutEnd = -windowHeight * 4.1  // 선거 텍스트 fade-out 완료
+
+      // 세습 단계: 선거 텍스트 fade-out 완료 후 시작
+      const hereditaryStart = -windowHeight * 4.1  // 세습 시작 (선거 텍스트 fade-out 완료 후)
+      const hereditaryTextFadeInStart = -windowHeight * 4.1  // 세습 텍스트 fade-in 시작
+      const hereditaryTextFadeInEnd = -windowHeight * 4.4  // 세습 텍스트 fade-in 완료
       const hereditaryTextFadeOutStart = -windowHeight * 5.5  // 세습 텍스트 fade-out 시작
       const hereditaryTextFadeOutEnd = -windowHeight * 5.8  // 세습 텍스트 fade-out 완료
       const hereditaryResetStart = -windowHeight * 4.5  // 원 5개를 100%로 맞추기 시작 (세습 텍스트 fade-in 완료 시점)
@@ -365,32 +365,34 @@ function Section2SystemComparison() {
       const purchaseSelectEnd = -windowHeight * 6.8  // 아래 열 선택된 원 위로 이동 + 위 열 재정렬 완료
       const purchaseOpacityStart = -windowHeight * 7.0  // opacity 변경 시작 (위 열 40%, 선택된 원 100%)
       const purchaseOpacityEnd = -windowHeight * 7.3  // opacity 변경 완료
+      const purchaseTextFadeOutStart = -windowHeight * 7.3  // 매관 텍스트 fade-out 시작 (opacity 변경 완료 직후)
+      const purchaseTextFadeOutEnd = -windowHeight * 7.6  // 매관 텍스트 fade-out 완료
 
-      // 천거 단계: 매관 완료 후 긴 스크롤 텀을 두고 시작
-      const recommendationStart = -windowHeight * 7.8  // 천거 시작 (긴 스크롤 텀)
-      const recommendationTextFadeInStart = -windowHeight * 7.8  // 천거 텍스트 fade-in 시작
-      const recommendationTextFadeInEnd = -windowHeight * 8.2  // 천거 텍스트 fade-in 완료
-      const recommendationTextFadeOutStart = -windowHeight * 9.5  // 천거 텍스트 fade-out 시작 (늦춤)
-      const recommendationTextFadeOutEnd = -windowHeight * 9.8  // 천거 텍스트 fade-out 완료 (늦춤)
+      // 천거 단계: 매관 텍스트 fade-out 완료 후 시작
+      const recommendationStart = -windowHeight * 7.6  // 천거 시작 (매관 fade-out 완료 후)
+      const recommendationTextFadeInStart = -windowHeight * 7.6  // 천거 텍스트 fade-in 시작
+      const recommendationTextFadeInEnd = -windowHeight * 7.9  // 천거 텍스트 fade-in 완료
+      const recommendationTextFadeOutStart = -windowHeight * 8.6  // 천거 텍스트 fade-out 시작 (선택 완료 직후)
+      const recommendationTextFadeOutEnd = -windowHeight * 8.9  // 천거 텍스트 fade-out 완료
       
-      // 시험제 단계: 천거 완료 후 시작
-      const examStart = -windowHeight * 9.8  // 시험제 시작 (천거 텍스트 fade-out 완료 시점)
-      const examTextFadeInStart = -windowHeight * 9.8  // 시험제 텍스트 fade-in 시작
-      const examTextFadeInEnd = -windowHeight * 10.2  // 시험제 텍스트 fade-in 완료
-      const examTextFadeOutStart = -windowHeight * 12.0  // 시험제 텍스트 fade-out 시작 (늦춤 - 통과 완료 후)
-      const examTextFadeOutEnd = -windowHeight * 12.3  // 시험제 텍스트 fade-out 완료
-      const examLineStart = -windowHeight * 9.8  // 선 그리기 시작 (텍스트 fade-in과 동시)
-      const examLineEnd = -windowHeight * 10.0  // 선 그리기 완료
-      const examCirclesAppearStart = -windowHeight * 10.0  // 원 배열 나타나기 시작 (선 그리기 완료 후)
-      const examCirclesAppearEnd = -windowHeight * 10.5  // 원 배열 나타나기 완료
-      const examMoveStart = -windowHeight * 10.8  // 원 이동 시작 (원 배열 나타나기 완료 후 스크롤 텀)
-      const examMoveEnd = -windowHeight * 11.5  // 원 이동 완료
-      const examPassStart = -windowHeight * 11.5  // 통과한 5개 100% 변환 시작
-      const examPassEnd = -windowHeight * 11.8  // 통과한 5개 100% 변환 완료
-      const recommendationMergeStart = -windowHeight * 7.8  // 위 행 2개 합치기 + 아래 행 4개 재정렬 시작
-      const recommendationMergeEnd = -windowHeight * 8.2  // 위 행 2개 합치기 + 아래 행 4개 재정렬 완료
-      const recommendationSelectStart = -windowHeight * 8.5  // 아래 행 랜덤 1개 선택 시작 (스크롤 텀)
-      const recommendationSelectEnd = -windowHeight * 8.8  // 아래 행 랜덤 1개 선택 완료 (100% fade in)
+      // 시험제 단계: 천거 fade-out 완료 후 시작
+      const examStart = -windowHeight * 8.9  // 시험제 시작 (천거 텍스트 fade-out 완료 직후)
+      const examTextFadeInStart = -windowHeight * 8.9  // 시험제 텍스트 fade-in 시작
+      const examTextFadeInEnd = -windowHeight * 9.2  // 시험제 텍스트 fade-in 완료
+      const examTextFadeOutStart = -windowHeight * 11.0  // 시험제 텍스트 fade-out 시작 (통과 완료 직후)
+      const examTextFadeOutEnd = -windowHeight * 11.3  // 시험제 텍스트 fade-out 완료
+      const examLineStart = -windowHeight * 8.9  // 선 그리기 시작 (텍스트 fade-in과 동시)
+      const examLineEnd = -windowHeight * 9.1  // 선 그리기 완료
+      const examCirclesAppearStart = -windowHeight * 9.2  // 원 배열 나타나기 시작 (선 그리기 완료 직후)
+      const examCirclesAppearEnd = -windowHeight * 9.7  // 원 배열 나타나기 완료
+      const examMoveStart = -windowHeight * 10.0  // 원 이동 시작 (원 배열 나타나기 완료 후 스크롤 텀)
+      const examMoveEnd = -windowHeight * 10.7  // 원 이동 완료
+      const examPassStart = -windowHeight * 10.7  // 통과한 5개 100% 변환 시작 (이동 완료 직후)
+      const examPassEnd = -windowHeight * 11.0  // 통과한 5개 100% 변환 완료
+      const recommendationMergeStart = -windowHeight * 7.6  // 위 행 2개 합치기 + 아래 행 4개 재정렬 시작 (천거 시작과 동시)
+      const recommendationMergeEnd = -windowHeight * 8.0  // 위 행 2개 합치기 + 아래 행 4개 재정렬 완료
+      const recommendationSelectStart = -windowHeight * 8.3  // 아래 행 랜덤 1개 선택 시작 (스크롤 텀)
+      const recommendationSelectEnd = -windowHeight * 8.6  // 아래 행 랜덤 1개 선택 완료 (100% fade in)
 
       // 선거 텍스트 fade-in/out
       const electionTextFadeInStart = electionStart
@@ -525,9 +527,6 @@ function Section2SystemComparison() {
         hereditaryDivisionProgress = 1
 
         // 매관 텍스트 fade-in/out
-        const purchaseTextFadeOutStart = recommendationTextFadeInStart  // 천거 시작과 동시에 fade-out
-        const purchaseTextFadeOutEnd = recommendationTextFadeInEnd  // 천거 텍스트 fade-in 완료 시점
-
         if (section2Top > purchaseTextFadeOutStart) {
           // Fade in
           if (section2Top > purchaseTextFadeInEnd) {

@@ -140,20 +140,23 @@ function Section7() {
           
           {/* 페이지별 텍스트 오버레이 */}
           <div className="page-text-overlay">
-            {pageTexts.map((text, index) => (
-              <motion.div
-                key={index}
-                className="overlay-text-container"
-                initial={{ opacity: 0 }}
-                animate={{ 
-                  opacity: Math.floor(currentPage / 2) === index ? 1 : 0 
-                }}
-                transition={{ duration: 0.5 }}
-              >
-                <p className="overlay-content">{text.content}</p>
-                <p className="overlay-source">{text.source}</p>
-              </motion.div>
-            ))}
+            {pageTexts.map((text, index) => {
+              const isVisible = Math.floor(currentPage / 2) === index
+              return (
+                <motion.div
+                  key={index}
+                  className="overlay-text-container"
+                  initial={{ opacity: 0 }}
+                  animate={{
+                    opacity: isVisible ? 1 : 0
+                  }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <p className="overlay-content">{text.content}</p>
+                  <p className="overlay-source">{text.source}</p>
+                </motion.div>
+              )
+            })}
           </div>
         </div>
         </div>

@@ -131,7 +131,7 @@ function EraChart() {
 
           {/* 데이터 포인트 (Union 이미지) */}
           {points.map((point, index) => {
-            const randomUnionIndex = Math.floor(Math.random() * 50)
+            const randomUnionIndex = Math.floor(Math.random() * 49) + 1
             const imageUrl = `/assets/Union-${randomUnionIndex}.png`
             const size = [0, 3, 8].includes(index) ? 30 : 20
             

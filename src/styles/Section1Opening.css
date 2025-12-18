@@ -72,17 +72,17 @@
 }
 
 .circle-inner-content .opening-text {
-  font-family: 'Pretendard', var(--font-sans);
-  font-weight: 500;
+  font-family: 'GyeongbokgungSumunjangBodyText', serif;
+  font-weight: 300;
   font-size: 14px;
   color: var(--grey);
   margin-bottom: 0.1rem;
 }
 
 .circle-inner-content .opening-text-instruction {
-  font-family: 'Pretendard', var(--font-sans);
+  font-family: 'GyeongbokgungSumunjangTitleM', serif;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--primary-dark);
 }
 
@@ -157,7 +157,7 @@
 }
 
 .talent-tooltip h4 {
-  font-family: 'Pretendard', var(--font-sans);
+  font-family: 'GyeongbokgungSumunjangTitleB', serif;
   font-size: 1.3rem;
   font-weight: 700;
   color: var(--accent-blue);
@@ -166,8 +166,9 @@
 }
 
 .talent-tooltip p {
-  font-family: 'Pretendard', var(--font-sans);
+  font-family: 'GyeongbokgungSumunjangBodyText', serif;
   font-size: 0.95rem;
+  font-weight: 500;
   color: var(--text-dark);
   margin: 0;
   line-height: 1.6;
